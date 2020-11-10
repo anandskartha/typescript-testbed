@@ -1,12 +1,15 @@
 import inputs from './inputs';
-
-const inputOutput: Array<any> = [];
-let output: object;
+interface Provider {
+    input: string,
+    output: string
+}
+const inputOutput: Array<Provider> = [];
+let result: Provider;
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-const solution = (S: any):any => {
+const solution = (S: any) => {
     const countLimit = 3;
     if (S.length < countLimit) {
         return S.length;
@@ -21,22 +24,20 @@ const solution = (S: any):any => {
                 ++count;
             }
         }
-        return Math.max(resultCount, count + 1)
+        return {
+            input: S,
+            output: Math.max(resultCount, count + 1)
+        }
     }
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////
-
 //No Changed below this needed
+
 for(const input of inputs) {
-    let a: Array<any> = Object.keys(input).map(key => input[key]);
-    output = solution.apply(null, a);
-    //output = {};
-    inputOutput.push({ input, output });
+    result = solution.apply(null, Object.keys(input).map(key => input[key]));
+    inputOutput.push({ ...result });
 }
 
 export default inputOutput;
-
-
-// export const str2: string = 'TSTest.ts'
